@@ -28,6 +28,35 @@ class Main extends Model {
         curl_close($curl);
         return json_decode($result);
     }
+    /*
+    *Curl Check valid token to server backend
+    */
+    public function checkValidToken()
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000/cvt?utoken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QiLCJleHAiOjE1NTE4MDIyNTd9.1UbDCdmWojwnJkEUGOoXf__33lCIB21UfqwCxZWQFW8&app=gnomes');
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        $result = json_decode($result);
+        if($result->message=="ok")
+            return 1;
+        else return 0;
+    }
+    /*
+    *Curl get rates
+    */
+    public function getCryptoRates()
+    {
+        $ch = curl_init("http://api.coinlayer.com/api/live?access_key=d31d0c92785885fac03c04db52cd1eee");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return json_decode($data);
+    }
+
+
 
 
     public function sendFeedBack($post){

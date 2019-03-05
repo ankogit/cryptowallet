@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel='stylesheet' href='https://unpkg.com/bulma@0.7.4/css/bulma.min.css'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">    
-    <link rel='stylesheet' href="/public/css/css/prism.css">
+    <link rel='stylesheet' href="/public/css/prism.css">
     <link rel="stylesheet" href="/public/css/cheatsheet.css">
 
 
@@ -55,7 +55,7 @@
         .slick-initialized .slick-slide {
             outline: none;
         }
-        .white-popup-block11 {
+        .white-popup {
             background: #fff;
             padding: 50px 50px;
             width: 800px;
@@ -79,9 +79,9 @@
               <i class="is-large fas fa-code"></i>
               <h1 class="title">Gnomes Wallet</h1>
               <h3 class="subtitle">
-                Эта шляпа придумана укропами
+                We keep your coins
               </h3>
-              <a href="https://github.com/dansup/bulma-templates" target="_blank" class="button is-primary is-large">
+              <a href="https://github.com/ankogit/cryptowallet" target="_blank" class="button is-primary is-large">
                 <span class="icon">
                   <i class="fab fa-github"></i>
                 </span>
@@ -98,35 +98,21 @@
           <div class="column is-3">
             <aside class="is-medium menu">
           <p class="menu-label">
-            categories
+            General
           </p>
           <ul class="menu-list">
             <li class="is-right"><a href="/" class="is-active"> Main</a></li>
-            <li><a href="/rates" class="is-active"> Rates</a></li>
+            
             <?php if(isset($_SESSION['user_token'])):?>
             <li><a href="/profile" class="is-active"> Profile</a></li>
-            <li><a href="/logout" class="is-active"> logout</a></li>
+            <li><a href="/logout" class="is-active"> Logout</a></li>
             <?php endif;?>
           </ul>
               <p class="menu-label">
-                More to read...
+                Others
               </p>
               <ul class="menu-list">
-                <li><span class="tag is-white is-medium">Lorem</span></li>
-                <li><span class="tag is-white is-medium">Ipsum</span></li>
-                <li><span class="tag is-white is-medium">Dolor</span></li>
-                <li><span class="tag is-white is-medium">Animi</span></li>
-                <li><span class="tag is-white is-medium">Eximi</span></li>
-                <li><span class="tag is-white is-medium">Nullius</span></li>
-                <li><span class="tag is-white is-medium">Oxipi</span></li>
-                <li><span class="tag is-white is-medium">Vultus</span></li>
-                <li><span class="tag is-white is-medium">Voluptatis</span></li>
-                <li><span class="tag is-white is-medium">Exomarphis</span></li>
-                <li><span class="tag is-white is-medium">Finimi</span></li>
-                <li><span class="tag is-white is-medium">Aenigma</span></li>
-                <li><span class="tag is-white is-medium">Arkham</span></li>
-                <li><span class="tag is-white is-medium">Blue</span></li>
-                <li><span class="tag is-white is-medium">Medium</span></li>
+                <li><a href="/rates"><span class="tag is-white is-medium">Rates</span></a></li>
               </ul>
             </aside>
           </div>
@@ -248,14 +234,13 @@
 <div class="columns is-mobile is-centered">
   <div class="field is-grouped is-grouped-multiline">
     <div class="control">
-      <div class="tags has-addons"><a class="tag is-link" href="https://github.com/dansup/bulma-templates">Bulma Templates</a>
-      <span class="tag is-info">MIT license</span>
+      <div class="tags has-addons"><a class="tag is-link" href="https://github.com/ankogit/cryptowallet">Gnome Software</a>
+      <span class="tag is-info">license</span>
     </div>
   </div>
   <div class="control">
     <div class="tags has-addons">
-      <span class="tag is-dark">based on a pen</span>
-      <span class="tag has-addons is-warning"><a href="https://codepen.io/melanieseltzer/pen/odOXWM"><i class="fab fa-lg fa-codepen"></i></a></span>
+      <span class="tag is-dark">mandarinshow.ru</span>
     </div>
   </div>
 </div>
@@ -274,6 +259,17 @@
   }
 });
 </script>  
+    <script src="/public/libs/waypoints/waypoints.min.js"></script>
+    <script src="/public/libs/animate/animate-css.js"></script>
+    <script src="/public/libs/plugins-scroll/plugins-scroll.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+    <script src="/public/libs/plugins-scroll/jquery.malihu.PageScroll2id.min.js"></script>
+    <script src="/public/libs/plugins-scroll/plugins-scroll.js"></script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="/public/libs/quicksand/js/jquery.quicksand.js"></script>
+    <script src="/public/libs/quicksand/js/script.js"></script>
 <script src="/public/js/common.js"></script>
 </body>
 </html>

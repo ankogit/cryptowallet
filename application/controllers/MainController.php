@@ -39,11 +39,13 @@ class MainController extends Controller {
         }
     }
     public function profileAction() {
+        //if(!$this->model->checkValidToken()) $this->view->redirect('logout');
         if (isset($_SESSION['user_token'])) {
-
-            $result = $this->model->curlQuery('/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
-
-            $balance = $this->model->curlQuery('/wallet/balance/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
+            $result[] = $this->model->curlQuery('/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
+            $result[] = $this->model->curlQuery('/wallet/ltc?utoken='.$_SESSION["user_token"].'&app=gnomes');
+            //echo '/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes';
+            $balance[] = $this->model->curlQuery('/wallet/balance/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
+            $balance[] = $this->model->curlQuery('/wallet/balance/ltc?utoken='.$_SESSION["user_token"].'&app=gnomes');
             //echo 'http://176.53.162.231:5000/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes';
             $vars = [
                 'data' => $result,
@@ -65,9 +67,10 @@ class MainController extends Controller {
         }
     }
     public function ratesAction() {
-            $price = $this->model->curlQuery('/price');
+        
+            $prices = $this->model->getCryptoRates();
             $vars = [
-                'price' => $price,
+                'prices' => $prices,
             ];
             $this->view->render('Rates', $vars);
 

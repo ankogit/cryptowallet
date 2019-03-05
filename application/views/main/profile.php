@@ -1,18 +1,33 @@
-
           <div class="column is-9">
             <div class="content is-medium">
                 <h3 class="title is-3">¯\_(ツ)_/¯</h3>
                 <div class="box">
                     <h4 id="const" class="title is-3">Информация о кошельке btc</h4>
+                    <p>Адрес:</p>
                     <article class="message is-primary">
                         <span class="icon has-text-primary">
                         </span>
                         <div class="message-body">
-                        <?=$data->address?>
+                        <?=$data[0]->address?>
                         </div>
                     </article>
-                    <pre><code class="language-javascript"><?=$data->pub?></code></pre>
-                    <p>Balance: <?=$balance->value?> btc</p>
+                    <p>Публичный ключ:</p>
+                    <pre><code class="language-javascript"><?=$data[0]->pub?></code></pre>
+                    <p>Balance: <?=$balance[0]->value?> btc</p>
+                </div>
+                <div class="box">
+                    <h4 id="const" class="title is-3">Информация о кошельке ltc</h4>
+                    <p>Адрес:</p>
+                    <article class="message is-primary">
+                        <span class="icon has-text-primary">
+                        </span>
+                        <div class="message-body">
+                        <?=$data[1]->address?>
+                        </div>
+                    </article>
+                    <p>Публичный ключ:</p>
+                    <pre><code class="language-javascript"><?=$data[1]->pub?></code></pre>
+                    <p>Balance: <?=$balance[1]->value?> ltc</p>
                 </div>
 
                 

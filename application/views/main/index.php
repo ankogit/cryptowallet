@@ -40,12 +40,6 @@
                                     <input class="input is-large" type="password" name="password" placeholder="Your Password">
                                 </div>
                             </div>
-                            <div class="field">
-                                <label class="checkbox">
-                                  <input type="checkbox">
-                                  Remember me
-                                </label>
-                            </div>
                             <button type="submit" class="button is-block is-info is-large is-fullwidth">Register</button>
                         </form>
                     </div>
