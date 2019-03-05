@@ -1,0 +1,55 @@
+@import "vars"
+
+
+/*==========  Desktop First  ==========*/
+
++media-breakpoint-down(xl)
++media-breakpoint-down(lg)
++media-breakpoint-down(md)
+	.design
+		&__form-block
+			width: 80%
+		&__inputs-block
+			width: 70%
+
+	.top-menu
+		display: none
+	.head-slider
+		&__text
+			width: auto
+	.logo
+		width: 170px
+		margin-bottom: 40px
+	.product
+		padding-top: 50px
+		&__sort
+			text-align: center
+			ul
+				display: block
+				li
+					margin-right: 0px
+					margin-bottom: 25px
++media-breakpoint-down(sm)
+	.design
+		padding-bottom: 90px
+		&__form-block
+			width: 100%
+		&__inputs-block
+			width: 80%
+
+	.contacts
+		background-position: center
+		&__video-block
+			margin-top: 20px
+		&__info-block
+			margin-top: 20px
++media-breakpoint-down(xs)
+
+
+/*==========  Mobile First  ==========*/
+
++media-breakpoint-up(xs)
++media-breakpoint-up(sm)
++media-breakpoint-up(md)
++media-breakpoint-up(lg)
++media-breakpoint-up(xl)

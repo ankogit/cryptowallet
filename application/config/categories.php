@@ -1,0 +1,25 @@
+<?php
+
+return [
+	"angular" => "Угловые диваны",
+    "children_sofas" => "Детские диваны",
+    "sofas_beds" => "Диваны-кровати",
+    "small_sized" => "Малогабаритные диваны",
+    "modular_sofas" => "Модульные диваны",
+    "chair_bed" => "Кресло-кровать",
+    "cabinets" => "Шкафы-купе",
+    "cabinets_victory" => 'Шкафы-купе "Victory"',
+    "living_rooms" => "Гостиные",
+    "bedrooms" => "Спальни",
+    "children_room" => "Детские комнаты",
+    "hallways" => "Прихожие",
+    "journal_table" => "Журнальные столы",
+    "computer_table" => "Компьютерные столы",
+    "tv_curbstones" => "TV-тумбы",
+    "footwear" => "Обувницы",
+    "hangers" => "Вешалки",
+    "pouffes" => "Пуфы",
+    "commode" => "Комоды",
+    "office_furniture" => "Офисная мебель",
+    "kitchens" => "Кухни",
+];
