@@ -12,11 +12,33 @@ $(document).ready(function() {
 			success: function(result) {
 				json = jQuery.parseJSON(result);
 				if (json.url) {
-					window.location.href = json.url;
+					go(json.url);
 				} else {
-					alert(json.status + ' - ' + json.message);
+					showModal(json.message);
+					//alert(json.status + ' - ' + json.message);
 				}
 			},
 		});
 	});
+
+
+
+function go( url ) {
+	window.location.href='/' + url;
+}
+
+
+
+
+function showModal(message) {
+
+$.magnificPopup.open({
+items: {
+      src: '<div class="white-popup">'+ message +'</div>',
+      type: 'inline'
+  },
+  closeBtnInside: true
+});
+
+}
 });
