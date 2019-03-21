@@ -31,19 +31,38 @@
                 </div>
 
                 
-                    <h3 class="title has-text-grey">Отправить гривну на смазку</h3>
+                    <h3 class="title has-text-grey">Отправить BTCOIN</h3>
 
                     <div class="box">
-                        <form action="/send" method="post">
+                        <form action="/send/btc" method="post">
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="text" name="value" placeholder="Value" autofocus="">
+                                    <input class="input is-large" type="text" name="value" placeholder="Value">
                                 </div>
                             </div>
 
                             <div class="field">
                                 <div class="control">
-                                    <input class="input is-large" type="password" name="to" placeholder="To..">
+                                    <input class="input is-large" type="text" name="to" placeholder="To..">
+                                </div>
+                            </div>
+                            <button type="submit" class="button is-block is-info is-large is-fullwidth">Отправить</button>
+                        </form>
+                    </div>
+                
+                    <h3 class="title has-text-grey">Отправить LTCOIN</h3>
+
+                    <div class="box">
+                        <form action="/send/ltc" method="post">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" type="text" name="value" placeholder="Value">
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input is-large" type="text" name="to" placeholder="To..">
                                 </div>
                             </div>
                             <button type="submit" class="button is-block is-info is-large is-fullwidth">Отправить</button>

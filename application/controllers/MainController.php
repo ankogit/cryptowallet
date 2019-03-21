@@ -39,7 +39,7 @@ class MainController extends Controller {
         }
     }
     public function profileAction() {
-        //if(!$this->model->checkValidToken()) $this->view->redirect('logout');
+        if(!$this->model->checkValidToken()) $this->view->redirect('logout');
         if (isset($_SESSION['user_token'])) {
             $result[] = $this->model->curlQuery('/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
             $result[] = $this->model->curlQuery('/wallet/ltc?utoken='.$_SESSION["user_token"].'&app=gnomes');
@@ -56,13 +56,13 @@ class MainController extends Controller {
     }
     public function sendAction() {
         if (!empty($_POST)) {
-
-            $result = $this->model->curlQuery('/wallet/send/btc?utoken='.$_SESSION["user_token"].'&to='.$_POST['to'].'&value
-='.$_POST['value'].'&app=gnomes');
-            echo $result;
-            /*if(!empty($result->message)) {
-                $this->view->message('default', $result->message);
-            }*/
+            
+$result = $this->model->curlQuery('/wallet/send/'.$this->route['type'].'?utoken='.$_SESSION["user_token"].'&to='.$_POST['to'].'&value='.$_POST['value'].'&app=gnomes');
+//exit(var_dump($result));
+            //echo $result;
+            if(!empty($result->status)) {
+                $this->view->message('default', $result->status);
+            }
 
         }
     }

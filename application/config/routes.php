@@ -14,7 +14,7 @@ return [
 		'controller' => 'main',
 		'action' => 'profile',
 	],
-	'send' => [
+	'send/{type:\w+}' => [
 		'controller' => 'main',
 		'action' => 'send',
 	],

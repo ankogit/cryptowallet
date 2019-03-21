@@ -34,7 +34,7 @@ class Main extends Model {
     public function checkValidToken()
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000/cvt?utoken=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QiLCJleHAiOjE1NTE4MDIyNTd9.1UbDCdmWojwnJkEUGOoXf__33lCIB21UfqwCxZWQFW8&app=gnomes');
+        curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000/cvt?utoken='.$_SESSION["user_token"].'&app=gnomes');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($curl);
         curl_close($curl);
