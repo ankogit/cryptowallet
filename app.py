@@ -216,6 +216,33 @@ def check(current_user):
     return jsonify({"message": "ok"})
 
 
+@app.route('/wallet/history/<ctype>')
+@app_verification
+@user_verification
+def hist(current_user, ctype):
+    wallet_id = Wallet.query.filter_by(user_id=current_user.id).first()
+
+    if ctype == "btc":
+        history = cryptos.Bitcoin(testnet=True).history(wallet_id.btc)
+        history_data = list()
+        for txs in history["txs"]:
+            output = list()
+            for j in txs["out"]:
+                output.append([j["addr"], j["value"]])
+            input_adr = txs["inputs"][0]["prev_out"]["addr"]
+            value = txs["inputs"][0]["prev_out"]["value"]
+            send_date = datetime.datetime.utcfromtimestamp(txs["time"] + 10800).strftime('%H:%M:%S %d-%m-%Y')
+            send_hash = txs["hash"]
+            if txs["inputs"][0]["prev_out"]["addr"] == wallet_id.btc:
+                send_colour = "red"
+            else:
+                send_colour = "green"
+            history_data.append({"input_adr": input_adr, "value": value, "output_adrs": output, "send_date": send_date,
+                                 "send_hash": send_hash, "send_colour": send_colour})
+        return jsonify({"history": history_data})
+    return jsonify({'message': "Unprocessable Entity."}), 422
+
+
 if __name__ == '__main__':
     app.run(host='176.53.162.231')
 
