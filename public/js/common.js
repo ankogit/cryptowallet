@@ -1,15 +1,15 @@
 $(function() {
-	$(".top-menu li a").mPageScroll2id();
+	//$(".top-menu li a").mPageScroll2id();
 
 	//Chrome Smooth Scroll
-	try {
+	/*try {
 		$.browserSelector();
 		if($("html").hasClass("chrome")) {
 			$.smoothScroll();
 		}
 	} catch(err) {
 
-	};
+	};*/
 
 
 	

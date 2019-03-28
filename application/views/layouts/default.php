@@ -105,6 +105,7 @@
             
             <?php if(isset($_SESSION['user_token'])):?>
             <li><a href="/profile" class="is-active"> Profile</a></li>
+            <!-- <li><a href="/history" class="is-active"> History</a></li> -->
             <li><a href="/logout" class="is-active"> Logout</a></li>
             <?php endif;?>
           </ul>
@@ -157,8 +158,8 @@
     <script src="/public/libs/animate/animate-css.js"></script>
     <script src="/public/libs/plugins-scroll/plugins-scroll.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
-    <script src="/public/libs/plugins-scroll/jquery.malihu.PageScroll2id.min.js"></script>
-    <script src="/public/libs/plugins-scroll/plugins-scroll.js"></script>
+    <!--<script src="/public/libs/plugins-scroll/jquery.malihu.PageScroll2id.min.js"></script>
+     <script src="/public/libs/plugins-scroll/plugins-scroll.js"></script> -->
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 

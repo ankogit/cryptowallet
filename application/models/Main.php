@@ -19,10 +19,10 @@ class Main extends Model {
     /*
     *Curl queryes to server backend
     */
-    public function curlQuery($path)
+    public function curlQuery($path, $params)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000'.$path);
+        curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000/'.$path.'?'.http_build_query($params));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($curl);
         curl_close($curl);

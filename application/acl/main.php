@@ -20,6 +20,8 @@ return [
 		'register',
 		'profile',
 		'send',
+        'add',
+        'history',
 		'logout',
 	],
 	'guest' => [

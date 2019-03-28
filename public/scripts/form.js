@@ -12,7 +12,7 @@ $(document).ready(function() {
 			success: function(result) {
 				json = jQuery.parseJSON(result);
 				if (json.url) {
-					go(json.url);
+					window.location.href = json.url;
 				} else {
 					showModal(json.message);
 					//alert(json.status + ' - ' + json.message);
@@ -20,12 +20,6 @@ $(document).ready(function() {
 			},
 		});
 	});
-
-
-
-function go( url ) {
-	window.location.href='/' + url;
-}
 
 
 

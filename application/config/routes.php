@@ -14,9 +14,17 @@ return [
 		'controller' => 'main',
 		'action' => 'profile',
 	],
-	'send/{type:\w+}' => [
+	'send/{wid:\d+}' => [
 		'controller' => 'main',
 		'action' => 'send',
+	],
+	'history/{wid:\d+}' => [
+		'controller' => 'main',
+		'action' => 'history',
+	],
+	'add/{type:\w+}/{testnet:\d+}' => [
+		'controller' => 'main',
+		'action' => 'addWallet',
 	],
 	'rates' => [
 		'controller' => 'main',
