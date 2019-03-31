@@ -1,0 +1,338 @@
+@import "vars"
+@import "fonts"
+@import "libs"
+@import "colors"
+
+::placeholder
+	color: #666
+
+::selection
+	background-color: $accent
+	color: #fff
+
+html, body
+	height: 100%
+
+
+html.js
+	.loader 
+		background: none repeat scroll 0 0 $content-bg-color
+		bottom: 0
+		height: 100%
+		left: 0
+		position: fixed
+		right: 0
+		top: 0
+		width: 100%
+		z-index: 1999
+	.loader_inner 
+		background-image: url("../img/preloader.gif")
+		background-size: cover
+		background-repeat: no-repeat
+		background-position: center center
+		background-color: #fff
+		height: 160px
+		width: 160px
+		margin-top: -100px
+		margin-left: -60px
+		left: 50%
+		top: 50%
+		position: absolute
+
+
+body
+	background: $content-bg-color
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.65
+	font-family: $default-font
+	overflow-x: hidden
+	input, textarea
+		border: #666 1px solid
+		outline: none
+		&:focus:required:invalid
+			border-color: red
+		&:required:valid
+			border-color: green
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+.text-center
+	text-align: center
+
+.container-fluid
+	max-width: 1545px
+
+.full-screen
+	height: 100vh
+
+.fix-bottom
+	bottom: 0px
+	position: absolute
+
+.no-padding
+	padding: 0 !important
+
+aside
+	position: fixed
+	left: 0
+	top: 0
+	height: 100%
+	z-index: $side-menu-desktop-z-index
+	background-color: $side-menu-bg-color
+	width: $side-menu-width
+	overflow: hidden
+	box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.15)
+
+.content
+	margin-left: $side-menu-width
+	padding: 70px
+	h1
+		color: $header-text-color
+		font-weight: 600
+	h2
+		color: $header-text-color
+		font-weight: 500
+	h3
+		color: $header-text-color
+		font-weight: 400
+
+.up
+	color: $success-text
+.down
+	color: $danger-text
+.success
+	color: $success-text
+.danger
+	color: $danger-text
+
+.list-group
+	.descr
+		color: $secondary
+
+.table-transactions
+	overflow: auto
+	table
+		min-width: 500px
+		border-collapse: collapse
+		width: 100%
+		th
+			color: $secondary
+		td, th
+			text-align: left
+			padding: 8px
+			font-weight: 500
+		a
+			font-size: 20px
+			&:hover
+				text-decoration: none
+	.status
+		padding: 5px 15px
+		border-radius: 4px
+		&-in
+			background-color: $success-bg
+			color: $success-text
+		&-out
+			background-color: $danger-bg
+			color: $danger-text
+	.wallet
+		position: relative
+		.wallet-image
+			width: 30px
+			height: 30px
+		.wallet-name
+			font-weight: 500
+			color: $header-text-color
+			top: -5px
+			position: relative
+		.wallet-sht
+			font-weight: 300
+			color: $header-text-color
+			position: absolute
+			top: 10px
+			font-size: 13px
+			left: 34px
+	.up
+		color: $success-text
+	.down
+		color: $danger-text
+
+a.wallet-list
+	color: $header-text-color
+	&:hover
+		text-decoration: none
+.wallet-list
+	padding-left: 100px !important
+	background-image: url('https://raw.githubusercontent.com/ankogit/cryptowallet/design/res/btc.png')
+	background-size: cover
+	background-repeat: no-repeat
+	background-size: 100px
+	background-position: -20px
+	&-title
+		position: relative
+		&__name
+			font-weight: 500
+			color: $header-text-color
+			top: -10px
+			position: relative
+			text-overflow: ellipsis
+			overflow: hidden
+			white-space: nowrap
+			display: block
+			width: 200px
+		&__sht
+			font-weight: 400
+			color: $secondary
+			position: absolute
+			top: 15px
+			font-size: 13px
+			left: 0px
+	&__count
+		font-weight: 600
+
+.block
+	background-color: $block-color
+	padding: 30px 40px
+	border-radius: 7px
+	box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.05)
+	transition: all .2s
+	margin-top: 15px
+	margin-bottom: 15px
+	overflow: hidden
+	position: relative
+	z-index: 0
+	&:hover
+		box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.15)
+
+.side-menu
+	&-header
+		img
+			width: 100px
+		h1
+			font-weight: 400
+			padding-bottom: 20px
+		h2, h3
+			padding-top: 20px
+			font-weight: 400
+			padding-bottom: 20px
+	&-body
+		padding-top: 30px
+		.list-group 
+			padding: 12px 0
+			//border-bottom: 1px solid #eeeeee
+			width: 75%
+			&-item
+				height: 40px
+				font-size: 18px
+				font-weight: 400
+				color: $header-text-color
+				padding: 0 27px
+				border: none
+				background-color: inherit
+				transition: all .1.5s
+				margin-top: 8px
+				&__icon
+					padding-right: 20px
+					color: $menu-color
+				&:hover
+					background-color: #f1f2fe
+					border-radius: 0 50px 50px 0
+					text-decoration: none
+				&.active
+					background-color: inherit
+					color: inherit
+					pointer-events: none
+					font-weight: 700
+					&__icon
+						color: $menu-color
+
+.round-header
+	width: 100%
+	position: relative
+	overflow: hidden
+	text-align: center
+	padding-top: 25px
+	color: #fff
+	&::before
+		content: ''
+		position: absolute
+		z-index: -1
+		width: 200%
+		height: 251%
+		bottom: 0px
+		left: -50%
+		border-radius: 50%
+		background-image: linear-gradient(to bottom, #3d3ded, #6967ef)
+	h1, h2, h3, h4
+		color: #ffffff
+
+.qr-adress
+	width: 200px
+	margin-top: 40px
+	margin-bottom: 40px
+
+
+.form-group
+	margin-bottom: 1rem
+	label
+		padding-top: calc(.375rem + 1px)
+		padding-bottom: calc(.375rem + 1px)
+		margin-bottom: 0
+		font-size: inherit
+		line-height: 1.5
+	.form-input
+		display: block
+		width: 100%
+		padding: 10px 20px
+		font-size: 1rem
+		line-height: 1.5
+		color: #f2f1f3
+		background-color: #fff
+		background-clip: padding-box
+		border: 1px solid #dcdbe2
+		border-radius: 5px
+		transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out
+		&:focus
+			color: #495057
+			background-color: #fff
+			border-color: #f1f2fe
+			outline: 0
+			box-shadow: 0 0 0 0.2rem #f1f2fe
+
+.button-v1
+	width: 100%
+	padding: 10px 20px
+	background-color: $button-color
+	text-align: center
+	display: inline-block
+	font-weight: 400
+	white-space: nowrap
+	vertical-align: middle
+	-webkit-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
+	border: 1px solid transparent
+	padding: .375rem .75rem
+	font-size: 1rem
+	line-height: 1.5
+	border-radius: 5px
+	color: #fff
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+	cursor: pointer
+	&:hover
+		color: #fff
+		background-color: $button-color-hover
+		outline: none
+	&:active, 
+		color: $secondary
+		background-color: $button-color-active
+		border-color: $button-color-active
+	&:focus
+		outline: none
+		border: 1px solid $secondary
+@import "media"
