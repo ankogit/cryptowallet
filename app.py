@@ -1,24 +1,16 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from flask import Flask, jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
-try:
-    from urllib.parse import urlparse
-except ImportError:
-     from urlparse import urlparse
-from urllib.parse import parse_qsl
 from flask_sqlalchemy import SQLAlchemy
-import walletapp as wls
 from functools import wraps
-import jwt
-import cryptos
+from scripts import cryptodef
 import datetime
-
+import jwt
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/scripts/data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/scripts/account.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['APP_TOKEN'] = 'gnomes'
 app.config['SECRET_KEY'] = 'thisissecretkey'
 
@@ -27,20 +19,17 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(50))
-    password = db.Column(db.String(80))
-    ttime = db.Column(db.Integer)
+    db_login = db.Column(db.String(50))
+    db_password = db.Column(db.String(80))
+    time_check = db.Column(db.Integer)
 
 
 class Wallet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    privatekey = db.Column(db.String)
-    publickey = db.Column(db.String)
-    btc = db.Column(db.String)
-    ltc = db.Column(db.String)
-    btccash = db.Column(db.String)
-    dash = db.Column(db.String)
-    doge = db.Column(db.String)
+    db_prvkey = db.Column(db.String)
+    db_pubkey = db.Column(db.String)
+    db_addres = db.Column(db.String)
+    db_type = db.Column(db.String)
     user_id = db.Column(db.Integer)
 
 
@@ -61,14 +50,13 @@ def user_verification(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.args.get('utoken')
-
         if not token:
-            return jsonify({'message' : 'User token is missing!'}), 401
+            return jsonify({'message': 'User token is missing!'}), 401
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = User.query.filter_by(email=data['email']).first()
-            if data['exp'] < current_user.ttime:
+            current_user = User.query.filter_by(db_login=data['login']).first()
+            if data['exp'] < current_user.time_check:
                 return jsonify({'message': 'User token is invalid!'}), 401
         except:
             return jsonify({'message': 'User token is invalid!'}), 401
@@ -81,133 +69,158 @@ def user_verification(f):
 @app.route('/register')
 @app_verification
 def user_register():
-    url = request.url
-    form_staff = urlparse(url).query
-    query = dict(parse_qsl(form_staff))
-    try:
-        hashed_password = generate_password_hash(query['password'], method='sha256')
+    login = request.args.get("login")
+    password = request.args.get("password")
 
-        user = User.query.filter_by(email=query['email']).first()
+    if login and password is not None:
+        user_check = User.query.filter_by(db_login=login).first()
+        if user_check is not None:
+            return jsonify({'message': 'That login is already in use.'})
 
-        if user is not None:
-            return jsonify({'message': 'That email address is already in use.'})
-
-        new_user = User(email=query['email'], password=hashed_password)
+        hashed_password = generate_password_hash(password, method='sha256')
+        new_user = User(db_login=login, db_password=hashed_password)
         db.session.add(new_user)
-
-        current_user = User.query.filter_by(email=query['email']).first()
-        data = wls.crwall(query['email'], query['password'])
-        new_wallet = Wallet(
-            privatekey=data['privat'],
-            publickey=data['publickey'],
-            btc=data['address'][0],
-            ltc=data['address'][1],
-            user_id=current_user.id
-        )
-        db.session.add(new_wallet)
         db.session.commit()
-    except KeyError:
-        return jsonify({'message': "Unprocessable Entity."}), 422
 
-    return jsonify({'message': 'Successfully'})
+        return jsonify({"message": "Successfully"})
+
+    return jsonify({'message': "Unprocessable Entity."}), 422
 
 
 @app.route('/login')
 @app_verification
-def login():
-    url = request.url
-    form_staff = urlparse(url).query
-    query = dict(parse_qsl(form_staff))
-    try:
-        user = User.query.filter_by(email=query['email']).first()
+def user_login():
+    login = request.args.get("login")
+    password = request.args.get("password")
+
+    if login and password is not None:
+        user = User.query.filter_by(db_login=login).first()
 
         if not user:
             return jsonify({'message': 'User is unknown.'}), 401
 
-        if not check_password_hash(user.password, query['password']):
+        if not check_password_hash(user.db_password, password):
             return jsonify({'message': 'Wrong password.'})
 
         times = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-        token = jwt.encode(
-            {'email': user.email, 'exp': times},
-            app.config['SECRET_KEY'])
-        user.ttime = int(times.replace(tzinfo=datetime.timezone.utc).timestamp())
+        token = jwt.encode({'login': user.db_login, 'exp': times}, app.config['SECRET_KEY'])
+        user.time_check = int(times.replace(tzinfo=datetime.timezone.utc).timestamp())
         db.session.commit()
 
-    except KeyError:
-        return jsonify({'message': "Unprocessable Entity."}), 422
+        return jsonify({'user_token': token.decode('UTF-8')})
 
-    return jsonify({'user_token': token.decode('UTF-8')})
+    return jsonify({'message': "Unprocessable Entity."}), 422
 
 
 @app.route('/logout')
 @app_verification
 @user_verification
-def user(current_user):
-    current_user.ttime += 1
+def user_logout(current_user):
+    current_user.time_check += 1
     db.session.commit()
     return jsonify({'message': 'Successfully.'})
 
 
-@app.route('/wallet/<ctype>')
+@app.route('/create')
 @app_verification
 @user_verification
-def wallet(current_user, ctype):
-    wallet_id = Wallet.query.filter_by(user_id=current_user.id).first()
-
-    if ctype == 'btc':
-        return jsonify({'pub': wallet_id.publickey, 'address': wallet_id.btc})
-
-    if ctype == 'ltc':
-        return jsonify({'pub': wallet_id.publickey, 'address': wallet_id.ltc})
-
-    return jsonify({'message': "Unprocessable Entity."}), 422
-
-
-@app.route('/wallet/balance/<ctype>')
-@app_verification
-@user_verification
-def balance(current_user, ctype):
-    wallet_id = Wallet.query.filter_by(user_id=current_user.id).first()
-
-    if ctype == 'btc':
-        balance_value = cryptos.Bitcoin(testnet=True).history(wallet_id.btc)
-        if len(balance_value) != 0:
-            return jsonify({'value': '{:.8f}'.format(balance_value['final_balance']/100000000)})
+def wallet_create(current_user):
+    cur_type = request.args.get("type")
+    test_net = request.args.get("testnet")
+    if cur_type and test_net is not None:
+        try:
+            test_net = int(test_net)
+        except ValueError:
+            return jsonify({'message': "Unprocessable Entity."}), 422
+        if cur_type in ["btc", "ltc"]:
+            wallet_details = cryptodef.add_wallet(login=current_user.db_login, password=current_user.db_password,
+                                                  cur_type=cur_type, test=test_net)
         else:
-            return jsonify({'value': "0"})
-    if ctype == 'ltc':
-        balance_value = cryptos.Litecoin(testnet=True).history(wallet_id.ltc)
-        if len(balance_value) != 0:
-            return jsonify({'value': balance_value['data']['balance']})
-        else:
-            return jsonify({'value': "0"})
+            return jsonify({'message': "Unprocessable Entity."}), 422
+
+        new_wallet = Wallet(db_prvkey=wallet_details['private'], db_pubkey=wallet_details['public'],
+                            db_addres=wallet_details['address'], db_type=cur_type, user_id=current_user.id)
+        db.session.add(new_wallet)
+        db.session.commit()
+        return jsonify({'message': 'Successfully.'})
+
     return jsonify({'message': "Unprocessable Entity."}), 422
 
 
-@app.route('/wallet/send/<ctype>')
+@app.route('/add')
 @app_verification
 @user_verification
-def send(current_user, ctype):
-    url = request.url
-    form_staff = urlparse(url).query
-    query = dict(parse_qsl(form_staff))
+def wallet_add(current_user):
+    cur_type = request.args.get("type")
+    private = request.args.get("pr")
+    public = request.args.get("pu")
+    address = request.args.get("ad")
+    if cur_type and private and public and address is not None:
 
-    wallet_id = Wallet.query.filter_by(user_id=current_user.id).first()
-    print(query, ctype)
-    if ctype == 'btc':
-        bit1 = cryptos.Bitcoin(testnet=True).send(wallet_id.privatekey, query['to'], query['value'])
-        return jsonify(bit1)
-    if ctype == 'ltc':
-        ltc1 = cryptos.Litecoin(testnet=True).send(wallet_id.privatekey, query['to'], query['value'])
-        return jsonify(ltc1)
+        new_wallet = Wallet(db_prvkey=private, db_pubkey=public,
+                            db_addres=address, db_type=cur_type, user_id=current_user.id)
+        db.session.add(new_wallet)
+        db.session.commit()
+
+        return jsonify({'message': 'Successfully.'})
+
     return jsonify({'message': "Unprocessable Entity."}), 422
 
 
-@app.route('/price')
-def price():
-    price_info = wls.price()
-    return jsonify(price_info)
+@app.route('/wallets')
+@app_verification
+@user_verification
+def check_wallets(current_user):
+    wallets = Wallet.query.filter_by(user_id=current_user.id).all()
+    data = list()
+    for w in wallets:
+        data.append({"id": w.id, "public": w.db_pubkey, "address": w.db_addres, "type": w.db_type})
+
+    return jsonify({'wallets': data})
+
+
+@app.route('/wallet/<wid>')
+@app_verification
+@user_verification
+def check_wallet(current_user, wid):
+    wallet = Wallet.query.filter_by(user_id=current_user.id, id=wid).first()
+
+    if not wallet:
+        return jsonify({'message': 'Wallet ID is unknown.'}), 401
+
+    return jsonify({'wallet': {"id": wallet.id, "public": wallet.db_pubkey, "address": wallet.db_addres,
+                               "type": wallet.db_type}})
+
+
+@app.route('/balance/<wid>')
+@app_verification
+@user_verification
+def balance_wallet(current_user, wid):
+    wallet = Wallet.query.filter_by(user_id=current_user.id, id=wid).first()
+
+    if not wallet:
+        return jsonify({'message': 'Wallet ID is unknown.'}), 401
+    balance = cryptodef.get_balance(address=wallet.db_addres, cur_type=wallet.db_type)
+
+    return jsonify(balance)
+
+
+@app.route('/send/<wid>')
+@app_verification
+@user_verification
+def send_wallet(current_user, wid):
+    address = request.args.get("ad")
+    value = request.args.get("va")
+
+    wallet = Wallet.query.filter_by(user_id=current_user.id, id=wid).first()
+    if not wallet:
+        return jsonify({'message': 'Wallet ID is unknown.'}), 401
+
+    if address and value is not None:
+        send = cryptodef.get_send(private=wallet.db_prvkey, to=address, value=value, cur_type=wallet.db_type)
+        return jsonify(send)
+
+    return jsonify({'message': "Unprocessable Entity."}), 422
 
 
 @app.route('/cvt')
@@ -216,31 +229,17 @@ def check(current_user):
     return jsonify({"message": "ok"})
 
 
-@app.route('/wallet/history/<ctype>')
+@app.route('/history/<wid>')
 @app_verification
 @user_verification
-def hist(current_user, ctype):
-    wallet_id = Wallet.query.filter_by(user_id=current_user.id).first()
+def hist(current_user, wid):
+    wallet = Wallet.query.filter_by(user_id=current_user.id, id=wid).first()
 
-    if ctype == "btc":
-        history = cryptos.Bitcoin(testnet=True).history(wallet_id.btc)
-        history_data = list()
-        for txs in history["txs"]:
-            output = list()
-            for j in txs["out"]:
-                output.append([j["addr"], j["value"]])
-            input_adr = txs["inputs"][0]["prev_out"]["addr"]
-            value = txs["inputs"][0]["prev_out"]["value"]
-            send_date = datetime.datetime.utcfromtimestamp(txs["time"] + 10800).strftime('%H:%M:%S %d-%m-%Y')
-            send_hash = txs["hash"]
-            if txs["inputs"][0]["prev_out"]["addr"] == wallet_id.btc:
-                send_colour = "red"
-            else:
-                send_colour = "green"
-            history_data.append({"input_adr": input_adr, "value": value, "output_adrs": output, "send_date": send_date,
-                                 "send_hash": send_hash, "send_colour": send_colour})
-        return jsonify({"history": history_data})
-    return jsonify({'message': "Unprocessable Entity."}), 422
+    if not wallet:
+        return jsonify({'message': 'Wallet ID is unknown.'}), 401
+
+    histoty = cryptodef.get_history(address=wallet.db_addres, cur_type=wallet.db_type)
+    return jsonify({"histoty": histoty})
 
 
 if __name__ == '__main__':
