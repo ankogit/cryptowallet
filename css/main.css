@@ -1870,6 +1870,11 @@ aside {
       text-align: left;
       padding: 8px;
       font-weight: 500; }
+    .table-transactions table tr.item {
+      border-radius: 8px;
+      transition: all 0.2s; }
+    .table-transactions table tr.item:hover {
+      background-color: #f8f9fa; }
     .table-transactions table a {
       font-size: 20px; }
       .table-transactions table a:hover {
@@ -2076,6 +2081,39 @@ a.wallet-list {
   .button-v1:focus {
     outline: none;
     border: 1px solid #9e98af; }
+
+.button-v2 {
+  width: 100%;
+  padding: 10px 20px;
+  background-color: transparent;
+  text-align: center;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 2px solid #6467ef;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 5px;
+  color: #6467ef;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer; }
+  .button-v2:hover {
+    color: #fff;
+    background-color: #6467ef;
+    outline: none; }
+  .button-v2:active {
+    color: #9e98af;
+    background-color: #434eee;
+    border-color: #434eee; }
+  .button-v2:focus {
+    outline: none;
+    border: 2px solid #434eee; }
 
 /*==========  Desktop First  ========== */
 /*==========  Mobile First  ========== */
