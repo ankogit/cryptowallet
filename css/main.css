@@ -1798,6 +1798,14 @@ body {
     body input:required:valid, body textarea:required:valid {
       border-color: green; }
 
+h1.h1 {
+  color: #414675;
+  font-weight: 600; }
+
+h2.h2 {
+  color: #414675;
+  font-weight: 500; }
+
 .img-responsive {
   display: block;
   max-width: 100%;
@@ -1818,6 +1826,12 @@ body {
 
 .no-padding {
   padding: 0 !important; }
+
+.min-height100vh {
+  min-height: 100vh; }
+
+.min-width400 {
+  min-width: 400px; }
 
 aside {
   position: fixed;
@@ -2029,7 +2043,8 @@ a.wallet-list {
     padding-bottom: calc(.375rem + 1px);
     margin-bottom: 0;
     font-size: inherit;
-    line-height: 1.5; }
+    line-height: 1.5;
+    color: #414675; }
   .form-group .form-input {
     display: block;
     width: 100%;
@@ -2076,8 +2091,8 @@ a.wallet-list {
     outline: none; }
   .button-v1:active {
     color: #9e98af;
-    background-color: #434eee;
-    border-color: #434eee; }
+    background-color: #35377e;
+    border-color: #35377e; }
   .button-v1:focus {
     outline: none;
     border: 1px solid #9e98af; }
@@ -2109,11 +2124,11 @@ a.wallet-list {
     outline: none; }
   .button-v2:active {
     color: #9e98af;
-    background-color: #434eee;
-    border-color: #434eee; }
+    background-color: #35377e;
+    border-color: #35377e; }
   .button-v2:focus {
     outline: none;
-    border: 2px solid #434eee; }
+    border: 2px solid #35377e; }
 
 /*==========  Desktop First  ========== */
 /*==========  Mobile First  ========== */
