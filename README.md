@@ -1,1 +1,1 @@
-![alt text](http://url/to/img.png)
+![alt text](https://raw.githubusercontent.com/ankogit/cryptowallet/layout/shotcut.png)
