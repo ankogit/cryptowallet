@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# /╲/\[☉﹏☉]/\╱\   <--   Aaaa, павук! 🕷️
 
 from flask import Flask, jsonify, request
 from werkzeug.security import generate_password_hash, check_password_hash
