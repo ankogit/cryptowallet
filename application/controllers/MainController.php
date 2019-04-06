@@ -1,10 +1,9 @@
 <?php
-
 namespace application\controllers;
 
 use application\core\Controller;
 use application\lib\Pagination;
-
+use application\core\App;
 class MainController extends Controller {
 
     public function indexAction() {
@@ -180,7 +179,8 @@ class MainController extends Controller {
         }
     }
     public function ratesAction() {
-        
+    		$exampleModel = $this->getModel("Example");
+    		$exampleModel->echoExample();
             $prices = $this->model->getCryptoRates();
             $vars = [
                 'prices' => $prices,

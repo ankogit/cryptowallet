@@ -3,8 +3,8 @@
 namespace application\core;
 
 use application\core\View;
-
-abstract class Controller {
+use application\core\App;
+abstract class Controller extends App{
 
 	public $route;
 	public $view;

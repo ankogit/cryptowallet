@@ -3,8 +3,8 @@
 namespace application\core;
 
 use application\lib\Db;
-
-abstract class Model {
+use application\core\App;
+abstract class Model extends App{
 
 	public $db;
 	
