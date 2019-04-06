@@ -36,5 +36,27 @@ class Db {
 	}
 
 
+    /**
+     * Make params for sql query
+     * @param $post
+     * @param $fields
+     * @return array
+     * field=:field
+     */
+    public function makeParams($post, $fields) {
+        $params = [];
+        $sql = 'UPDATE catalog SET ';
+        $sqlParams = [];
+        foreach ($fields as $field) {
+            if (array_key_exists($field, $post)) {
+                $params[$field] = $post[$field];
+                $sqlParams[] = $field .' = :'.$field;
+            }
+        }
+        $sql .= join($sqlParams, ',');
+        return [$params, $sqlParams];
+    }
+
+
 
 }

@@ -3,6 +3,6 @@
 return [
 	'host' => 'localhost',
 	'name' => 'phprun',
-	'user' => 'anko',
+	'user' => 'root',
 	'password' => 'Mandarin_137054t',
 ];
