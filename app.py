@@ -7,10 +7,11 @@ from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 from scripts import cryptodef
 import datetime
+import requests
 import jwt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/scripts/account.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////sqlite/account.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['APP_TOKEN'] = 'gnomes'
 app.config['SECRET_KEY'] = 'thisissecretkey'
@@ -27,6 +28,7 @@ class User(db.Model):
 
 class Wallet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    db_title = db.Column(db.String)
     db_prvkey = db.Column(db.String)
     db_pubkey = db.Column(db.String)
     db_addres = db.Column(db.String)
@@ -128,6 +130,7 @@ def user_logout(current_user):
 def wallet_create(current_user):
     cur_type = request.args.get("type")
     test_net = request.args.get("testnet")
+    title = request.args.get("title")
     if cur_type and test_net is not None:
         try:
             test_net = int(test_net)
@@ -138,9 +141,11 @@ def wallet_create(current_user):
                                                   cur_type=cur_type, test=test_net)
         else:
             return jsonify({'message': "Unprocessable Entity."}), 422
-
+        if title is None:
+            title = "Wallet for {}.".format(cur_type.upper())
         new_wallet = Wallet(db_prvkey=wallet_details['private'], db_pubkey=wallet_details['public'],
-                            db_addres=wallet_details['address'], db_type=cur_type, user_id=current_user.id)
+                            db_addres=wallet_details['address'], db_type=cur_type, user_id=current_user.id,
+                            db_title=title)
         db.session.add(new_wallet)
         db.session.commit()
         return jsonify({'message': 'Successfully.'})
@@ -156,10 +161,12 @@ def wallet_add(current_user):
     private = request.args.get("pr")
     public = request.args.get("pu")
     address = request.args.get("ad")
+    title = request.args.get("title")
     if cur_type and private and public and address is not None:
-
+        if title is None:
+            title = "Wallet for {}.".format(cur_type.upper())
         new_wallet = Wallet(db_prvkey=private, db_pubkey=public,
-                            db_addres=address, db_type=cur_type, user_id=current_user.id)
+                            db_addres=address, db_type=cur_type, user_id=current_user.id, db_title=title)
         db.session.add(new_wallet)
         db.session.commit()
 
@@ -177,7 +184,7 @@ def check_wallets(current_user):
     for w in wallets:
         data.append({"id": w.id, "public": w.db_pubkey, "address": w.db_addres, "type": w.db_type})
 
-    return jsonify({'wallets': data})
+    return jsonify(data)
 
 
 @app.route('/wallet/<wid>')
@@ -189,8 +196,7 @@ def check_wallet(current_user, wid):
     if not wallet:
         return jsonify({'message': 'Wallet ID is unknown.'}), 401
 
-    return jsonify({'wallet': {"id": wallet.id, "public": wallet.db_pubkey, "address": wallet.db_addres,
-                               "type": wallet.db_type}})
+    return jsonify({"id": wallet.id, "public": wallet.db_pubkey, "address": wallet.db_addres, "type": wallet.db_type})
 
 
 @app.route('/balance/<wid>')
@@ -240,9 +246,63 @@ def hist(current_user, wid):
         return jsonify({'message': 'Wallet ID is unknown.'}), 401
 
     histoty = cryptodef.get_history(address=wallet.db_addres, cur_type=wallet.db_type)
-    return jsonify({"histoty": histoty})
+    return jsonify({"history": histoty})
+
+
+@app.route('/cname/<wid>')
+@app_verification
+@user_verification
+def change_name(current_user, wid):
+    title = request.args.get("title")
+    if title is None:
+        return jsonify({'message': 'Title not found.'}), 401
+    wallet = Wallet.query.filter_by(user_id=current_user.id, id=wid).first()
+
+    if not wallet:
+        return jsonify({'message': 'Wallet ID is unknown.'}), 401
+
+    wallet.db_title = title
+    db.session.commit()
+    return jsonify({'message': 'Successfully.'})
+
+
+@app.route('/price')
+@app_verification
+def curr_price():
+    btc = requests.get("https://api.coinmarketcap.com/v1/ticker/bitcoin/")
+    btc_json = btc.json()
+
+    ltc = requests.get("https://api.coinmarketcap.com/v1/ticker/litecoin/")
+    ltc_json = ltc.json()
+
+    return jsonify({"btc": btc_json[-1], "ltc": ltc_json[-1]})
+
+
+@app.route('/extend')
+@app_verification
+def extend():
+    old_token = request.args.get("utoken")
+
+    if old_token is not None:
+        try:
+            data = jwt.decode(old_token, verify=False)
+        except jwt.exceptions.DecodeError:
+            return jsonify({'message': "Incorrect token."}), 422
+
+        user = User.query.filter_by(db_login=data['login']).first()
+        if not user:
+            return jsonify({'message': 'User is unknown.'}), 401
+
+        times = datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
+        token = jwt.encode({'login': user.db_login, 'exp': times}, app.config['SECRET_KEY'])
+        user.time_check = int(times.replace(tzinfo=datetime.timezone.utc).timestamp())
+        db.session.commit()
+
+        return jsonify({'user_token': token.decode('UTF-8')})
+
+    return jsonify({'message': "Unprocessable Entity."}), 422
 
 
 if __name__ == '__main__':
-    app.run(host='176.53.162.231')
+    app.run()
 
