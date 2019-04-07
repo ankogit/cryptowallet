@@ -20,6 +20,7 @@ return [
 		'register',
 		'profile',
 		'send',
+        'create',
         'add',
         'history',
 		'logout',

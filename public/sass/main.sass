@@ -4,11 +4,10 @@
 @import "colors"
 
 ::placeholder
-	color: #c1c1c1
-	font-size: 15px
+	color: #666
 
 ::selection
-	background-color: $accent
+	background-color: #6967ef
 	color: #fff
 
 html, body
@@ -17,7 +16,7 @@ html, body
 
 html.js
 	.loader 
-		background: none repeat scroll 0 0 #ffffff
+		background: none repeat scroll 0 0 $content-bg-color
 		bottom: 0
 		height: 100%
 		left: 0
@@ -42,8 +41,8 @@ html.js
 
 
 body
-	background: white
-	font-size: 18px
+	background: $content-bg-color
+	font-size: 16px
 	min-width: 320px
 	position: relative
 	line-height: 1.65
@@ -57,6 +56,13 @@ body
 		&:required:valid
 			border-color: green
 
+h1.h1
+	color: $header-text-color
+	font-weight: 600
+h2.h2
+	color: $header-text-color
+	font-weight: 500
+
 .img-responsive
 	display: block
 	max-width: 100%
@@ -68,317 +74,319 @@ body
 .container-fluid
 	max-width: 1545px
 
+.max-w-100
+	max-width: 100%
+
 .full-screen
 	height: 100vh
 
-.logo
-	margin-top: 40px
+.fix-bottom
+	bottom: 0px
+	position: absolute
 
-.top-menu
-	margin: 50px auto
-	display: table
-	ul
-		display: flex
-		margin: 0
-		padding: 0
-		li
-			list-style: none
-			margin-right: 70px
-			a
-				text-decoration: none
-				color: #474747
-				position: relative
-				&:before
-					content: ""
-					position: absolute
-					background: #474747
-					width: 0
-					height: 2px
-					left: 50%
-					bottom: -4px
-					transition: all 1s
-				&:hover:before
-					width: 80%
-					bottom: -4px
-					left: 10%
-					transition: all 1s
+.no-padding
+	padding: 0 !important
 
-.pop-up
-	position: relative
-	background: #fff
-	padding: 50px 50px
-	width: 500px
-	margin: 40px auto
-	text-align: center
-	box-shadow: 0 -2px 6px rgba(14,21,47,.05), 0 6px 18px rgba(14,21,47,.15)
-	&__description
-		font-family: $open-regular
-		width: 88%
-		display: inline-block
-		margin-bottom: 20px
-	&__input
-		font-family: $open-bold
-		padding: 10px 20px
+.min-height100vh
+	min-height: 100vh
+
+.min-width400
+	min-width: 400px
+
+aside
+	position: fixed
+	left: 0
+	top: 0
+	height: 100%
+	z-index: $side-menu-desktop-z-index
+	background-color: $side-menu-bg-color
+	width: $side-menu-width
+	overflow: hidden
+	box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.15)
+
+.content
+	margin-left: $side-menu-width
+	padding: 70px
+	h1
+		color: $header-text-color
+		font-weight: 600
+	h2
+		color: $header-text-color
+		font-weight: 500
+	h3
+		color: $header-text-color
+		font-weight: 400
+
+.up
+	color: $success-text
+.down
+	color: $danger-text
+.success
+	color: $success-text
+.danger
+	color: $danger-text
+
+.list-group
+	.descr
+		color: $secondary
+
+.table-transactions
+	overflow: auto
+	table
+		min-width: 500px
+		border-collapse: collapse
 		width: 100%
-		border: none
-		background: #f0f0f0
-		margin-top: 20px
-	&__inputs-block
-		width: 100%
-		position: relative
-		margin: 0 auto
-
-		
-.head-slider
-	min-height: 625px
-	background-image: url(../img/slider1.JPG)
-	background-repeat: no-repeat
-	background-size: cover
-	background-position: 50% 20%
-	position: relative
-	padding-top: 400px
-	padding-bottom: 100px
-	&__text
-		margin: 0 auto
-		width: 30%
-		color: white
-		text-align: center
-	&__h
-		font-family: $open-xbold
-		font-size: 36px
-		line-height: 1
-
-.custom-heading
-	font-size: 24px
-	font-weight: 300
-	display: inline-block
-	position: relative
-	margin-bottom: 50px
-	&:before
-		content: ""
-		position: absolute
-		background: #474747
-		height: 2px
-		width: 80%
-		left: 10%
-		bottom: -4px
-
-.product
-	padding-top: 110px
-	color: #474747
-	&__item-naming
-		font-family: $open-regular
-		font-size: 14px
-		color: #494949
-		padding-top: 10px
-	&__item
-		margin-top: 30px
-		height: 325px
-		background: #000
-		position: relative
-		overflow: hidden
-		transition: all 1s
-		&:hover
-			box-shadow: 0 -2px 6px rgba(14,21,47,.05), 0 6px 18px rgba(14,21,47,.15)
-		&:hover .product__item-hover
-			height: 35%
-			transition: all 1s	
-		img
-			width: 100%
-	&__item-hover
-		position: absolute
-		background: rgba(255,255,255,0.95)
-		width: 100%	
-		height: 0
-		bottom: 0
-		text-align: center
-		transition: all 1s
+		th
+			color: $secondary
+		td, th
+			text-align: left
+			padding: 8px
+			font-weight: 500
+		tr.item
+			border-radius: 8px
+			transition: all .2s
+		tr.item:hover
+			background-color: $light
 		a
-			text-decoration: none
-			display: inline-block
-			margin-top: 30px
-			font-size: 16px
-			color: #958133
+			font-size: 20px
+			&:hover
+				text-decoration: none
+	.status
+		padding: 5px 15px
+		border-radius: 4px
+		&-in
+			background-color: $success-bg
+			color: $success-text
+		&-out
+			background-color: $danger-bg
+			color: $danger-text
+	.wallet
+		position: relative
+		.wallet-image
+			width: 30px
+			height: 30px
+		.wallet-name
+			font-weight: 500
+			color: $header-text-color
+			top: -5px
 			position: relative
-			&:before
-				content: ""
-				position: absolute
-				background: #958133
-				width: 0
-				height: 2px
-				left: 50%
-				bottom: -2px
-				transition: all 1s
-			&:hover:before
-				left: 10%
-				width: 80%
-				bottom: -2px
-				transition: all 1s
-	&__sort
-		margin: 0 auto
-		display: table
-		margin-bottom: 30px
-		ul
-			display: flex
-			margin: 0
-			padding: 0
-			li
-				list-style: none
-				margin-right: 45px
-				a
-					text-decoration: none
-					color: #474747
-					font-size: 13px
-					position: relative
-					&:before
-						content: ""
-						position: absolute
-						background: #605838
-						width: 0
-						height: 1px
-						left: 50%
-						bottom: -7px
-						transition: all 1s
-					&:focus:before
-						color: #605838
-						width: 80%
-						bottom: -7px
-						left: 10%
-						transition: all 1s
+		.wallet-sht
+			font-weight: 300
+			color: $header-text-color
+			position: absolute
+			top: 10px
+			font-size: 13px
+			left: 34px
+	.up
+		color: $success-text
+	.down
+		color: $danger-text
 
-.custom-button
-	padding: 16px 25px
-	font-family: $open-xbold
-	font-size: 16px
-	color: #9c9c9c
-	display: inline-block
-	text-decoration: none
-	transition: all 1s
-	margin-top: 30px
-
-.grey
-	background: #e8e8e8
-	&:hover
-		background: #908559
-		color: #fff
-		text-decoration: none
-
-.blue
-	background: #3897f0
-	color: #fff
-	&:hover
-		background: lighten(#3897f0, 20%)
-		color: #fff
-		text-decoration: none
-
-.black
-	background: #434343
-	color: #fff
+a.wallet-list
+	color: $header-text-color
 	&:hover
 		text-decoration: none
-		color: #fff
-		background: lighten(#434343, 40%)
-
-.instagram
-	padding-top: 120px
-	color: #474747
-	&__item
-		margin-top: 30px
-		position: relative
-		overflow: hidden
-		height: 255px
-		background: #000
-		transition: all 1s
-		&:hover
-			transition: all 1s
-			box-shadow: 0 -2px 6px rgba(14,21,47,.05), 0 6px 18px rgba(14,21,47,.15)
-		img
-			width: 100%
-
-.delivery
-	padding-top: 150px
-	color: #474747
-	&__h
-		font-family: $open-bold
-		font-size: 22px
-	&__description
-		font-size: 16px
-	&__text-block
-		display: inline-block
-		width: 65%
-		margin-top: 100px
-
-.design
-	padding-top: 140px
-	padding-bottom: 160px
-	color: #474747
-	text-align: center
-	&__input
-		font-family: $open-bold
-		padding: 10px 20px
-		width: 100%
-		border: none
-		background: #f0f0f0
-		margin-top: 20px
-	&__inputs-block
-		width: 50%
-		position: relative
-		margin: 0 auto
-	&__form-block
-		width: 60%
-		display: block
-		position: relative
-		margin: 0 auto
-	&__description
-		font-family: $open-regular
-		width: 88%
-		display: inline-block
-		margin-bottom: 20px
-
-.contacts
-	padding-top: 60px
-	padding-bottom: 100px
-	min-height: 800px
-	position: relative
-	background-image: url(../img/bg.png)
+.wallet-list
+	padding-left: 100px !important
+	background-image: url('https://raw.githubusercontent.com/ankogit/cryptowallet/design/res/btc.png')
 	background-size: cover
-	color: #474747
-	&__info-block
+	background-repeat: no-repeat
+	background-size: 100px
+	background-position: -20px
+	&-title
 		position: relative
+		&__name
+			font-weight: 500
+			color: $header-text-color
+			top: -10px
+			position: relative
+			text-overflow: ellipsis
+			overflow: hidden
+			white-space: nowrap
+			display: block
+			width: 200px
+		&__sht
+			font-weight: 400
+			color: $secondary
+			position: absolute
+			top: 15px
+			font-size: 13px
+			left: 0px
+	&__count
+		font-weight: 600
+
+.block
+	background-color: $block-color
+	padding: 30px 40px
+	border-radius: 7px
+	box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.05)
+	transition: all .2s
+	margin-top: 15px
+	margin-bottom: 15px
+	overflow: hidden
+	position: relative
+	z-index: 0
+	&:hover
+		box-shadow: 0px 0px 20px rgba(34, 36, 38, 0.15)
+
+.side-menu
+	&-header
+		img
+			width: 100px
+		h1
+			font-weight: 400
+			padding-bottom: 20px
+		h2, h3
+			padding-top: 20px
+			font-weight: 400
+			padding-bottom: 20px
+	&-body
+		padding-top: 30px
+		.list-group 
+			padding: 12px 0
+			//border-bottom: 1px solid #eeeeee
+			width: 75%
+			&-item
+				height: 40px
+				font-size: 19px
+				font-weight: 400
+				color: $header-text-color
+				padding: 0 27px
+				border: none
+				background-color: inherit
+				transition: all .25s
+				margin-top: 8px
+				&__icon
+					padding-right: 20px
+					color: $menu-color
+				&:hover
+					background-color: #f1f2fe
+					border-radius: 0 50px 50px 0
+					text-decoration: none
+				&.active
+					background-color: inherit
+					color: inherit
+					pointer-events: none
+					font-weight: 700
+					&__icon
+						color: $menu-color
+
+.round-header
+	width: 100%
+	position: relative
+	overflow: hidden
+	text-align: center
+	padding-top: 25px
+	color: #fff
+	&::before
+		content: ''
+		position: absolute
+		z-index: -1
+		width: 200%
+		height: 251%
+		bottom: 0px
+		left: -50%
+		border-radius: 50%
+		background-image: linear-gradient(to bottom, #3d3ded, #6967ef)
+	h1, h2, h3, h4
+		color: #ffffff
+
+.qr-adress
+	width: 200px
+	margin-top: 40px
+	margin-bottom: 40px
+
+
+.form-group
+	margin-bottom: 1rem
+	label
+		padding-top: calc(.375rem + 1px)
+		padding-bottom: calc(.375rem + 1px)
+		margin-bottom: 0
+		font-size: inherit
+		line-height: 1.5
+		color: $header-text-color
+	.form-input
+		display: block
 		width: 100%
-		height: 300px
-		margin-top: 100px
-		background: #fff
-		box-shadow: 0 -2px 6px rgba(14,21,47,.05), 0 6px 18px rgba(14,21,47,.15)
-		padding: 100px 0px
-		ul
-			color: #626262
-			margin: 0 auto
-			width: 360px
-			padding: 0
-			list-style: none
-			font-family: $open-regular
-			font-size: 16px
-			li
-				padding-bottom: 10px
-				i
-					margin-right: 15px
-	&__video-block
-		width: 100%
-		height: 300px
-		position: relative
-		margin-top: 100px
-	&__video
-		width: 100%
-		height: 100%
+		padding: 10px 20px
+		font-size: 1rem
+		line-height: 1.5
+		color: #f2f1f3
+		background-color: #fff
+		background-clip: padding-box
+		border: 1px solid #dcdbe2
+		border-radius: 5px
+		transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out
+		&:focus
+			color: #495057
+			background-color: #fff
+			border-color: #f1f2fe
+			outline: 0
+			box-shadow: 0 0 0 0.2rem #f1f2fe
 
-footer
-	padding-top: 80px
-
-.copyright
-	font-family: $open-regular
-	font-size: 14px
-	color: #666666
-
-
+.button-v1
+	width: 100%
+	padding: 10px 20px
+	background-color: $button-color
+	text-align: center
+	display: inline-block
+	font-weight: 400
+	white-space: nowrap
+	vertical-align: middle
+	-webkit-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
+	border: 1px solid transparent
+	padding: .375rem .75rem
+	font-size: 1rem
+	line-height: 1.5
+	border-radius: 5px
+	color: #fff
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+	cursor: pointer
+	&:hover
+		color: #fff
+		background-color: $button-color-hover
+		outline: none
+	&:active, 
+		color: $secondary
+		background-color: $button-color-active
+		border-color: $button-color-active
+	&:focus
+		outline: none
+		border: 1px solid $secondary
+.button-v2
+	width: 100%
+	padding: 10px 20px
+	background-color: transparent
+	text-align: center
+	display: inline-block
+	font-weight: 400
+	white-space: nowrap
+	vertical-align: middle
+	-webkit-user-select: none
+	-moz-user-select: none
+	-ms-user-select: none
+	user-select: none
+	border: 2px solid $button-color
+	padding: .375rem .75rem
+	font-size: 1rem
+	line-height: 1.5
+	border-radius: 5px
+	color: $button-color
+	transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+	cursor: pointer
+	&:hover
+		color: #fff
+		background-color: $button-color
+		outline: none
+	&:active, 
+		color: $secondary
+		background-color: $button-color-active
+		border-color: $button-color-active
+	&:focus
+		outline: none
+		border: 2px solid $button-color-active
 @import "media"

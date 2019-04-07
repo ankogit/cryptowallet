@@ -18,11 +18,19 @@ return [
 		'controller' => 'main',
 		'action' => 'send',
 	],
+	'wallet/{wid:\d+}' => [
+		'controller' => 'main',
+		'action' => 'wallet',
+	],
 	'history/{wid:\d+}' => [
 		'controller' => 'main',
 		'action' => 'history',
 	],
-	'add/{type:\w+}/{testnet:\d+}' => [
+	'create' => [
+		'controller' => 'main',
+		'action' => 'createWallet',
+	],
+	'add' => [
 		'controller' => 'main',
 		'action' => 'addWallet',
 	],

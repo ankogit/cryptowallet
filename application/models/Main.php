@@ -41,7 +41,18 @@ class Main extends Model {
         $result = json_decode($result);
         if($result->message=="ok")
             return 1;
-        else return 0;
+        else {
+            if(isset($_SESSION["user_token"])) {
+                $curl = curl_init();
+                curl_setopt($curl, CURLOPT_URL, 'http://176.53.162.231:5000/extend?utoken='.$_SESSION["user_token"].'&app=gnomes');
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                $result = curl_exec($curl);
+                curl_close($curl);
+                $result = json_decode($result);
+                $_SESSION["user_token"] = $result->user_token;
+                return 1;
+            } else return 0;
+        }
     }
     /*
     *Curl get rates

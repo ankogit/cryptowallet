@@ -7,6 +7,6 @@ class Example extends Model
 {
 	public function echoExample()
 	{
-		echo "Example working with another model";
+		return "Example working with another model";
 	}
 }
