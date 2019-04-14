@@ -42,7 +42,7 @@
 
 
                 </div>-->
-
+<?php $notification->show(); ?>
           <div id="app" class="min-height100vh d-flex align-items-center justify-content-center">
               <div class="block" style="padding: 45px 120px;">
                   <h2 class="text-center h2">Авторизация</h2>

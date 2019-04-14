@@ -3,6 +3,7 @@ namespace application\controllers;
 
 use application\core\Controller;
 use application\lib\Pagination;
+use application\lib\Notification;
 use application\core\App;
 class MainController extends Controller {
     public function __construct($route) {
@@ -34,6 +35,7 @@ class MainController extends Controller {
         }
 
         $vars = [
+        	"notification" => new Notification()
         ];
         $this->view->render('Главная', $vars);
     }
@@ -47,6 +49,10 @@ class MainController extends Controller {
             );
             $result = $this->model->curlQuery('register', $params);
             if(!empty($result->message)) {
+            	if($result->message = "Successfully") {
+		        	$notification = new Notification();
+		        	$notification->add("Successfully");
+        		}
                 $this->view->message('default', $result->message);
             }
             if(!empty($result->user_token)) {
