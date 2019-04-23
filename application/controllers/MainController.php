@@ -33,9 +33,9 @@ class MainController extends Controller {
             }
             
         }
-
+        $notification = new Notification();
         $vars = [
-        	"notification" => new Notification()
+        	"notification" => $notification->getNotify()
         ];
         $this->view->render('Главная', $vars);
     }

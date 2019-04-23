@@ -42,7 +42,9 @@
 
 
                 </div>-->
-<?php $notification->show(); ?>
+<?php if (!empty($notification)) : ?>
+    <div><h3><?=$notification["status"]?></h3><h5><?=$notification["msg"]?></h5></div>
+<? endif; ?>
           <div id="app" class="min-height100vh d-flex align-items-center justify-content-center">
               <div class="block" style="padding: 45px 120px;">
                   <h2 class="text-center h2">Авторизация</h2>
