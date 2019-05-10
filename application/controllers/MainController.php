@@ -123,6 +123,13 @@ class MainController extends Controller {
             $result = $this->model->curlQuery('create', $params);*/
             $balance = NULL;
 
+            usort($wallets,
+                function($a, $b)
+                {
+                    return strcmp($a->type, $b->type);
+                }
+            );
+
             foreach ($wallets as $wallet) {
                 $params = array(
                     'utoken' => $_SESSION["user_token"],
@@ -130,11 +137,13 @@ class MainController extends Controller {
                 );
                 $balance[$wallet->id] = $this->model->curlQuery('balance/'.$wallet->id, $params);
             }
+
             
             //echo '/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes';
             /*$balance[] = $this->model->curlQuery('/wallet/balance/btc?utoken='.$_SESSION["user_token"].'&app=gnomes');
             $balance[] = $this->model->curlQuery('/wallet/balance/ltc?utoken='.$_SESSION["user_token"].'&app=gnomes');*/
             //echo 'http://176.53.162.231:5000/wallet/btc?utoken='.$_SESSION["user_token"].'&app=gnomes';
+
             $vars = [
                 'wallets' => $wallets,
                 'balance' => $balance
@@ -243,7 +252,12 @@ class MainController extends Controller {
             $wallets = $this->model->curlQuery('wallets', $params);
 
             $balance = NULL;
-
+            usort($wallets,
+                function($a, $b)
+                {
+                    return strcmp($a->type, $b->type);
+                }
+            );
             foreach ($wallets as $wallet) {
                 $params = array(
                     'utoken' => $_SESSION["user_token"],
